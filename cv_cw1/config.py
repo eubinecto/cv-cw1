@@ -6,3 +6,4 @@ RESRC_DIR = LIB_DIR.joinpath("resources")
 
 # the img to be used
 KITTY_BMP_PATH = RESRC_DIR.joinpath("kitty.bmp")
+
