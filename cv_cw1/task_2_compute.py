@@ -6,8 +6,7 @@ import cv2
 import numpy as np
 from cv_cw1.paths import KITTY_BMP
 from cv_cw1.task_1_convolve import pad, convolve
-from cv_cw1.utils import show_img
-
+from matplotlib import pyplot as plt
 # convolving an image with prewitt kernels results in an approximation of
 # the differentiation of the image with respect to the pixel values.
 PREWITT_KERNELS = (
@@ -55,9 +54,6 @@ def compute_gradients(img: np.array, mode: str) -> Tuple[np.array, np.array]:
 def compute_magnitude(x_gradients: np.array, y_gradients: np.array) -> np.array:
     """
     sqrt(x_g**2 + y_g**2)
-    :param x_gradients:
-    :param y_gradients:
-    :return:
     """
     return np.sqrt(np.power(x_gradients, 2) + np.power(y_gradients, 2))
 
@@ -68,16 +64,13 @@ def main():
     # convolve the image
     kitty_convoluted = convolve(kitty, mode="weighted_mean")
     # compute the horizontal & vertical gradients.
-    prewitt_gradients = compute_gradients(kitty_convoluted, 'prewitt')
     sobel_gradients = compute_gradients(kitty_convoluted, 'sobel')
-    prewitt_magnitude = compute_magnitude(prewitt_gradients[0], prewitt_gradients[1])
     sobel_magnitude = compute_magnitude(sobel_gradients[0], sobel_gradients[1])
-    show_img(prewitt_gradients[0])
-    show_img(prewitt_gradients[1])
-    show_img(sobel_gradients[0])
-    show_img(sobel_gradients[0])
-    show_img(prewitt_magnitude)
-    show_img(sobel_magnitude)
+    f, axarr = plt.subplots(1, 3)
+    axarr[0].imshow(sobel_gradients[0], cmap='gray')
+    axarr[1].imshow(sobel_gradients[1], cmap='gray')
+    axarr[2].imshow(sobel_magnitude, cmap='gray')
+    plt.show()
 
 
 if __name__ == '__main__':
