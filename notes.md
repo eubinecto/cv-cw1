@@ -2,12 +2,10 @@
 
 ## Task 1 - implement a convolution function
 
-> motivation
 
-Convolution. I'm doing this once and for all, by implementing this from scratch!
 
 > What am I supposed to do?
-1. write `convolve_img()` function.
+1. write `convolve()` function.
    - you should pad the edges of the input image with zeros. (how did I do this?)
    - we should perform explicit looping over it. (2)
    - start with a 3 by 3 convolution filter. (optional: parameterize the size of the filter as n)
@@ -19,10 +17,8 @@ Convolution. I'm doing this once and for all, by implementing this from scratch!
 
 THat means to reduce the image into a smaller one, while maintaining important features of the original one.
 
-For example,
-any examples from the lectures?
-
-The "structuring element" probably refers to a convolution filter.
+For example, any examples from the lectures? The "structuring element" probably
+refers to a convolution filter.
 
 
 > Why do I want to perform a convolution on `kitty.bmp`? 
@@ -31,18 +27,44 @@ To extract some features? Yes. If you look at the description for task 2:
 - compute the "horizontal and vertical gradient images"
 - find the "edge strength image", given by the gradient magnitude
 
+(from the lecture). If we had 9 different images with different noises,
+we can denoise them into a single image by averaging over them. But we don't always have
+enough samples to be used. Alternatively, we could use convolution to denoise the image,
+given only the image itself. 
+
+> ![](.notes_images/ea964124.png)
+> Here is an example of denoising an image with (local) spatial averaging with a 3 by 3 filters and  a 5 by 5 filter.
+
+> ![](.notes_images/97a02250.png)
+>  an example scenario where we may need convolution: image sub sampling 
+
+
+
+> Why does spatial averaging work?
+
+Because the neighbourhood have similar values to each other. We are exploiting that feature.
+
+
+Notice that we lose more information with a bigger filter. The assumption gets increasingly invalid as
+the filter gets larger.
+
+> Wait, but wouldn't "denoising" make the edges less salient? How would this help?
+
+That assumption does not hold true for edges of course.
+Surely, the edges on the kitty would become less salient, but so would those on the wooden floor.
+
 
 > Why do we pad the image? 
 
 Because otherwise, the image won't be a square...?
 
 
-> How do I implement `convolve_img()`?
+> How do I implement `convolve()`?
 
 Look it up on the lectures maybe?
 
 
-> How do I implement `pad_img()`
+> How do I implement `pad()`
 
 This, look it up on the lectures.
 
@@ -53,6 +75,10 @@ image then?
 > What is Sobel or Prewitt kernel? What do they have to do with mean and weighed mean kernel?
 
 Are they mentioned in the lectures somehow?
+
+> ![](.notes_images/24919e76.png)
+> max filter, avg filter (weights are just 1), weighted avg filter (more weights on those close to the center).
+
 
 
 > What should you do if the sum of the kernel is 0 You can't divide by zero; You can't 
@@ -70,6 +96,17 @@ Are they mentioned in the lectures somehow?
 - for that, calculate the edge strength image (2)
 - maybe visualise before and after all of these
 
+
+> What are the formulae for horizontal & vertical gradient of an image?
+
+
+> How do we combine that into a "gradient magnitude image"?
+
+
+> How do we get "edge strength image" from a gradient magnitude image?
+
+
+
 ## Task 3 - **detect** the edges of the cat
 
 > what am I supposed to do?
@@ -80,6 +117,24 @@ Are they mentioned in the lectures somehow?
   - find the threshold that gives the edges of the cat, but those of fur and wood-grain.  
   - visualise the process, include in the report. 
 
+> what are "edges", numerically speaking?
+
+> ![](.notes_images/734b6c66.png)
+
+They are the regions where the gray level is **changing rapidly**. (edges & convolution, part1).
+Mathematically speaking, these are the regions at which the first derivative 
+of the intensity function reaches its extrema. 
+
+> Why do we need to convolve an image before detecting the edges?
+
+
+> How do we detect horizontal edges?
+
+Calculate the gradients along the horizontal axis.
+
+> How do we detect vertical edges?
+
+Calculate the gradients along the vertical axis.
 
 > How do we find a great threshold value?
 
