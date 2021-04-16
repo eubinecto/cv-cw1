@@ -1,14 +1,14 @@
 import cv2
 import numpy as np
 from cv_cw1.paths import KITTY_BMP
-from matplotlib import pyplot as plt
+from cv_cw1.utils import show_img
 
 # the kernels to use.
 MEAN_KERNEL = np.ones(shape=(3, 3)) / 10  # not weighted, and normalised. (add up to 9)
+# change this to a gaussian filter.
 WEIGHTED_MEAN_KERNEL = np.array([[0.5, 1, 0.5],
                                  [1,   2,   1],
                                  [0.5, 1, 0.5]]) / 8  # weighted, and normalised (add up to 8)
-KERNEL_SIZE = 3  # we are using a kernel of size 3.
 
 
 def pad(img: np.array) -> np.array:
@@ -16,7 +16,11 @@ def pad(img: np.array) -> np.array:
     :param img: an image to pad.
     :return:
     """
-    return np.pad(img, (1, 1), 'constant', constant_values=(0, 0))
+    # 1. build a placeholder.
+    img_padded = np.zeros(shape=(img.shape[0] + 2, img.shape[1] + 2))
+    # 2. copy and paste inside the "box"
+    img_padded[1:-1, 1:-1] = img
+    return img_padded
 
 
 def convolve(img: np.array, mode: str = 'mean') -> np.array:
@@ -58,12 +62,9 @@ def main():
     # make sure that the shape did not.
     assert kitty.shape == kitty_conv_mean.shape
     assert kitty.shape == kitty_conv_w_mean.shape
-    plt.imshow(kitty)
-    plt.show()
-    plt.imshow(kitty_conv_mean)
-    plt.show()
-    plt.imshow(kitty_conv_w_mean)
-    plt.show()
+    show_img(kitty)
+    show_img(kitty_conv_mean)
+    show_img(kitty_conv_w_mean)
 
 
 if __name__ == '__main__':

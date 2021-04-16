@@ -53,6 +53,12 @@ the filter gets larger.
 That assumption does not hold true for edges of course.
 Surely, the edges on the kitty would become less salient, but so would those on the wooden floor.
 
+> ![](.notes_images/80db441f.png)
+
+Both average kernel and weighted average kernel result in smoothing out the edges.
+But resulting image with weighted average kernel has a "rather smoother contour". Which
+is a better property for edge detection. ("keep this in mind"). 
+
 
 > Why do we pad the image? 
 
@@ -63,13 +69,20 @@ Because otherwise, the image won't be a square...?
 
 Look it up on the lectures maybe?
 
+this repo should help:
+- https://github.com/ashushekar/image-convolution-from-scratch/blob/master/convolve.py
+
 
 > How do I implement `pad()`
 
 This, look it up on the lectures.
 
+use np.pad() function.
+
 > Wouldn't the image get smaller after the convolution? How do we detect edges of the original
 image then?
+
+That's why you do padding. pad 1 zero pixel before and after the boundaries. (and pad the four corners as well)
 
 
 > What is Sobel or Prewitt kernel? What do they have to do with mean and weighed mean kernel?
