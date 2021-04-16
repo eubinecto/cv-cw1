@@ -26,8 +26,12 @@ def plot_hist(img: np.array):
     plt.show()
 
 
-def threshold(img: np.array, val: int) -> np.array:
-    _, output = cv2.threshold(img, thresh=val,
+THRESH = 120
+
+
+def threshold(img: np.array) -> np.array:
+    global THRESH
+    _, output = cv2.threshold(img, thresh=THRESH,
                               maxval=255, type=cv2.THRESH_BINARY)
     return output
 
@@ -40,7 +44,7 @@ def main():
     kitty_gradients = compute_gradients(kitty_convoluted, mode='sobel')
     # get the gradient magnitude
     kitty_magnitude = compute_magnitude(kitty_gradients[0], kitty_gradients[1])
-    kitty_edges = threshold(kitty_magnitude, 120)
+    kitty_edges = threshold(kitty_magnitude)
     # have a look at the histogram
     plot_hist(kitty)
     plot_hist(np.float32(kitty_convoluted))
