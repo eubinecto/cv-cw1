@@ -59,7 +59,7 @@ def compute_magnitude(x_gradients: np.array, y_gradients: np.array) -> np.array:
     :param y_gradients:
     :return:
     """
-    return np.sqrt(x_gradients**2 , y_gradients**2)
+    return np.sqrt(np.power(x_gradients, 2) + np.power(y_gradients, 2))
 
 
 def main():
