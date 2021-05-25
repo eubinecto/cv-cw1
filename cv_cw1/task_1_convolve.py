@@ -3,7 +3,7 @@ import numpy as np
 from cv_cw1.paths import KITTY_BMP
 from matplotlib import pyplot as plt
 # the kernels
-MEAN_KERNEL = np.ones(shape=(3, 3)) / 10  # not weighted, normalised. (add up to 9)
+MEAN_KERNEL = np.ones(shape=(3, 3)) / 9  # not weighted, normalised. (add up to 9)
 WEIGHTED_MEAN_KERNEL = np.array([[0.5, 1, 0.5],
                                  [1,   2,   1],
                                  [0.5, 1, 0.5]]) / 8  # weighted, normalised (add up to 8)
